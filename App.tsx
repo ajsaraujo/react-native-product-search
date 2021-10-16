@@ -2,11 +2,15 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import SearchBar from "./src/components/SearchBar";
+import Toggle from "./src/components/Toggle";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <SearchBar></SearchBar>
+      <View style={{ marginBottom: 12 }}>
+        <SearchBar></SearchBar>
+      </View>
+      <Toggle></Toggle>
     </View>
   );
 }
