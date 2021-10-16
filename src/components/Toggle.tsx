@@ -1,5 +1,11 @@
 import React from "react";
-import { Text, Switch, View, StyleSheet } from "react-native";
+import {
+  Text,
+  Switch,
+  View,
+  StyleSheet,
+  SwitchChangeEvent,
+} from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -14,13 +20,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Toggle() {
+export default function Toggle(props: {
+  value: boolean;
+  onChange: (value: boolean) => void;
+  label: string;
+}) {
   return (
     <View style={styles.container}>
       <View style={styles.switchContainer}>
-        <Switch></Switch>
+        <Switch value={props.value} onValueChange={props.onChange}></Switch>
       </View>
-      <Text style={styles.label}>Only show products in stock</Text>
+      <Text style={styles.label}>{props.label}</Text>
     </View>
   );
 }
