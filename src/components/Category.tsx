@@ -1,6 +1,7 @@
 import React from "react";
 import { Category } from "../models/Category";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import ProductComponent from "./Product";
 
 const styles = StyleSheet.create({
   header: {
@@ -12,8 +13,14 @@ export default function CategoryComponent(props: { category: Category }) {
   const { category } = props;
 
   return (
-    <View>
-      <Text style={styles.header}>{category.name}</Text>
+    <View style={{ marginBottom: 25 }}>
+      <View style={{ marginBottom: 15 }}>
+        <Text style={styles.header}>{category.name}</Text>
+      </View>
+      <FlatList
+        data={category.products}
+        renderItem={({ item }) => ProductComponent({ product: item })}
+      ></FlatList>
     </View>
   );
 }

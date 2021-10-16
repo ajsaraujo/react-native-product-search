@@ -1,5 +1,6 @@
 import { Category } from "../models/Category";
 import { Product } from "../models/Product";
+import parseFloat from "./parseFloat";
 
 export default (
   data: { category: string; price: string; stocked: boolean; name: string }[]
