@@ -10,15 +10,18 @@ import parseData from "./src/utils/parseData";
 export default function App() {
   return (
     <View style={styles.container}>
-      <View style={{ marginBottom: 12 }}>
-        <SearchBar></SearchBar>
-      </View>
-      <Toggle></Toggle>
       <View style={styles.categoriesContainer}>
         <FlatList
           data={parseData(Products)}
           renderItem={({ item }) => CategoryComponent({ category: item })}
         ></FlatList>
+      </View>
+
+      <View>
+        <View style={{ marginBottom: 10 }}>
+          <SearchBar></SearchBar>
+        </View>
+        <Toggle></Toggle>
       </View>
     </View>
   );
@@ -26,8 +29,13 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 25,
+    paddingTop: 10,
+    paddingBottom: 35,
     paddingHorizontal: 35,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    flex: 1,
   },
   categoriesContainer: {
     marginTop: 20,
