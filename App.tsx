@@ -7,7 +7,6 @@ import {
   View,
 } from "react-native";
 import CategoryComponent from "./src/components/Category";
-import Category from "./src/components/Category";
 import SearchBar from "./src/components/SearchBar";
 import Toggle from "./src/components/Toggle";
 import Products from "./src/data/Products";
@@ -16,11 +15,17 @@ import parseData from "./src/utils/parseData";
 const categories = parseData(Products);
 
 export default function App() {
-  const [filters, setFilters] = useState({ onlyProductsInStock: false });
+  const [filters, setFilters] = useState({
+    onlyProductsInStock: false,
+    searchString: "",
+  });
 
   function toggleOnlyShowProductsInStock(onlyProductsInStock: boolean) {
-    console.log(`setting: ${onlyProductsInStock}`);
-    setFilters({ onlyProductsInStock });
+    setFilters({ ...filters, onlyProductsInStock });
+  }
+
+  function search(searchString: string) {
+    setFilters({ ...filters, searchString });
   }
 
   return (
@@ -40,7 +45,7 @@ export default function App() {
 
       <View>
         <View style={{ marginBottom: 10 }}>
-          <SearchBar></SearchBar>
+          <SearchBar value={filters.searchString} onChange={search}></SearchBar>
         </View>
         <Toggle
           label="Only show products in stock"
