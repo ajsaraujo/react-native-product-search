@@ -13,28 +13,14 @@ import Toggle from "./src/components/Toggle";
 import Products from "./src/data/Products";
 import parseData from "./src/utils/parseData";
 
+const categories = parseData(Products);
+
 export default function App() {
-  const allProducts = parseData(Products);
-
-  const productsInStock = [...allProducts].map((category) => {
-    const clone = category.clone();
-
-    clone.removeOutOfStockProducts();
-
-    return clone;
-  });
-
-  const [onlyShowProductsInStock, setOnlyShowProductsInStock] = useState(false);
-  const [products, setProducts] = useState(allProducts);
+  const [filters, setFilters] = useState({ onlyProductsInStock: false });
 
   function toggleOnlyShowProductsInStock(onlyProductsInStock: boolean) {
-    setOnlyShowProductsInStock(onlyProductsInStock);
-
-    if (onlyProductsInStock) {
-      setProducts(productsInStock);
-    } else {
-      setProducts(allProducts);
-    }
+    console.log(`setting: ${onlyProductsInStock}`);
+    setFilters({ onlyProductsInStock });
   }
 
   return (
@@ -43,8 +29,11 @@ export default function App() {
         <Text style={styles.header}>📊 My Stock</Text>
         <View style={styles.categoriesContainer}>
           <FlatList
-            data={products}
-            renderItem={({ item }) => CategoryComponent({ category: item })}
+            data={categories}
+            renderItem={({ item }) =>
+              CategoryComponent({ category: item, filters })
+            }
+            extraData={filters}
           ></FlatList>
         </View>
       </View>
@@ -55,7 +44,7 @@ export default function App() {
         </View>
         <Toggle
           label="Only show products in stock"
-          value={onlyShowProductsInStock}
+          value={filters.onlyProductsInStock}
           onChange={toggleOnlyShowProductsInStock}
         ></Toggle>
       </View>

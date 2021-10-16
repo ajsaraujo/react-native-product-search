@@ -9,8 +9,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function CategoryComponent(props: { category: Category }) {
+export default function CategoryComponent(props: {
+  category: Category;
+  filters: { onlyProductsInStock: boolean };
+}) {
   const { category } = props;
+
+  const products = props.filters.onlyProductsInStock
+    ? category.products.filter((product) => product.available)
+    : category.products;
 
   return (
     <View style={{ marginBottom: 25 }}>
@@ -18,7 +25,7 @@ export default function CategoryComponent(props: { category: Category }) {
         <Text style={styles.header}>{category.name}</Text>
       </View>
       <FlatList
-        data={category.products}
+        data={products}
         renderItem={({ item }) => ProductComponent({ product: item })}
       ></FlatList>
     </View>
