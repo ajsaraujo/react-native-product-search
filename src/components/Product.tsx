@@ -19,7 +19,28 @@ export default function ProductComponent(props: { product: Product }) {
   });
   return (
     <View style={styles.container}>
-      <Text>{product.name}</Text>
+      <View style={{ display: "flex", flexDirection: "row" }}>
+        <Text
+          style={{
+            marginRight: 5,
+            lineHeight: 16,
+          }}
+        >
+          {product.name}
+        </Text>
+        {!product.available && (
+          <Text
+            style={{
+              fontSize: 12,
+              lineHeight: 16,
+              color: "#7d7d7d",
+              fontWeight: "500",
+            }}
+          >
+            OUT OF STOCK
+          </Text>
+        )}
+      </View>
       <Text>{formatCurrency(product.price)}</Text>
     </View>
   );
