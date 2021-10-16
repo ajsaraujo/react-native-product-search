@@ -2,7 +2,7 @@ import { Category } from "../models/Category";
 import { Product } from "../models/Product";
 
 export default (
-  data: [{ category: string; price: string; stocked: boolean; name: string }]
+  data: { category: string; price: string; stocked: boolean; name: string }[]
 ): Category[] => {
   const categoryToProducts = new Map<string, Product[]>();
 
