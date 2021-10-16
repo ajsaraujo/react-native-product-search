@@ -14,10 +14,27 @@ import Products from "./src/data/Products";
 import parseData from "./src/utils/parseData";
 
 export default function App() {
-  const [onlyShowProductsInStock, setOnlyShowProductsInStock] = useState(false);
+  const allProducts = parseData(Products);
 
-  function toggleOnlyShowProductsInStock(value: boolean) {
-    setOnlyShowProductsInStock(value);
+  const productsInStock = [...allProducts].map((category) => {
+    const clone = category.clone();
+
+    clone.removeOutOfStockProducts();
+
+    return clone;
+  });
+
+  const [onlyShowProductsInStock, setOnlyShowProductsInStock] = useState(false);
+  const [products, setProducts] = useState(allProducts);
+
+  function toggleOnlyShowProductsInStock(onlyProductsInStock: boolean) {
+    setOnlyShowProductsInStock(onlyProductsInStock);
+
+    if (onlyProductsInStock) {
+      setProducts(productsInStock);
+    } else {
+      setProducts(allProducts);
+    }
   }
 
   return (
@@ -26,7 +43,7 @@ export default function App() {
         <Text style={styles.header}>📊 My Stock</Text>
         <View style={styles.categoriesContainer}>
           <FlatList
-            data={parseData(Products)}
+            data={products}
             renderItem={({ item }) => CategoryComponent({ category: item })}
           ></FlatList>
         </View>
